@@ -27,11 +27,13 @@ QString Work::browse_datalogging_file(main_settings &s)
     }
     // dialog likes to mess with current directory
     QDir::setCurrent(OPENTRACK_BASE_PATH);
+	
     return newfilename;
 }
 
 std::shared_ptr<TrackLogger> Work::make_logger(main_settings &s)
 {
+	//qDebug() << "enter: logic/Work::make_logger";
     if (s.tracklogging_enabled)
     {
         QString filename = browse_datalogging_file(s);
@@ -41,7 +43,12 @@ std::shared_ptr<TrackLogger> Work::make_logger(main_settings &s)
         }
         else
         {
-            auto logger = std::make_shared<TrackLoggerCSV>(s.tracklogging_filename);
+			//qDebug() << "enter: logic/Work::make_logger call make_shared()";
+			//qDebug() << "at: logic/Work::make_logger s.tracklogging_filename = " << s.tracklogging_filename;
+			qDebug() << "output: logic/tracklogger.hpp::TrackLoggerCSV Qstring filename=" << filename;
+			//qDebug() << "output: logic/tracklogger.hpp::TrackLoggerCSV filename.toStdString()=" << filename.toStdString();
+            auto logger = std::make_shared<TrackLoggerCSV>(s.tracklogging_filename); // here has a unknown bug
+			//qDebug() << "exit: logic/Work::make_logger call make_shared()";
             if (!logger->is_open())
             {
                 logger = nullptr;
@@ -56,6 +63,7 @@ std::shared_ptr<TrackLogger> Work::make_logger(main_settings &s)
             }
         }
     }
+	//qDebug() << "exit: logic/Work::make_logger";
     return std::make_shared<TrackLogger>();
 }
 
