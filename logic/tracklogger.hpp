@@ -43,6 +43,9 @@ public:
 
     void reset_dt();
     void write_dt();
+	
+	//below is modified by MosQuito
+	//double now_timestamp;
 };
 
 
@@ -54,7 +57,10 @@ class OPENTRACK_LOGIC_EXPORT TrackLoggerCSV : public TrackLogger
 public:
     TrackLoggerCSV(const QString &filename) : first_col(true)
     {
-        out.open(filename.toStdString());
+		//below is modified by MosQuito
+        //out.open(filename.toStdString());
+		out.open("sensor_data.csv");
+		//end
     }
 
     bool is_open() const { return out.is_open(); }

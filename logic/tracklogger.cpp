@@ -10,7 +10,10 @@ void TrackLogger::reset_dt()
 
 void TrackLogger::write_dt()
 {
-    const double dt = t.elapsed_seconds();
+	//below is modified by MosQuito
+    //const double et = t.elapsed_seconds();
+	const double dt = t.timestamp();
+	//end
     write(&dt, 1);
 }
 
@@ -36,8 +39,13 @@ void TrackLoggerCSV::write(const double *p, int n)
         out << p[i];
         out.put(',');
     }
-    out << p[n-1];
+	
+	//below is modified by MosQuito
+	out.precision(3);
+    out << std::fixed << p[n-1];
+	//end
 }
+
 
 void TrackLoggerCSV::next_line()
 {
